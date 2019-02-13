@@ -21,12 +21,12 @@ connection.connect(function(err) {
 var userChoice = {};
 
 // Function that emptys the userChoice array so a new product can be placed inside of an empty array.
-var emptyUserChoice = function() {
+function emptyUserChoice() {
     userChoice = {};
 }
 
 // Function that shows all items for sale, but does not show the quantity available
-var showAllProducts = function() {
+function showAllProducts() {
     connection.query("SELECT * FROM products", (err, res) => {
         let productListing = new Table({
             head: [chalk.blueBright.bold("ID"), chalk.blueBright.bold("PRODUCT NAME"), chalk.blueBright.bold("DEPARTMENT"), chalk.blueBright.bold("PRICE")],
@@ -35,13 +35,12 @@ var showAllProducts = function() {
             productListing.push([chalk.red.bold(res[i].item_id), res[i].product_name, res[i].department_name, chalk.greenBright(`$${res[i].price}`)]);
         }
         console.log(`${productListing.toString()}`);
-        
         productID();
     });
 };
 
 // Function that asks the user to enter the product ID for the item they want to purchase
-var productID = function() {
+function productID() {
     inquirer.prompt({
         name: "productID",
         type: "input",
@@ -64,7 +63,7 @@ var productID = function() {
 };
 
 // Function to check if the product chosen is correct
-var productCheck = function(product, object) {
+function productCheck(product, object) {
     inquirer.prompt({
         name: "productCheck",
         type: "confirm",
@@ -88,7 +87,7 @@ var productCheck = function(product, object) {
 };
 
 // Function for the quantity needed to purchase by the user
-var quantityNeeded = function() {
+function quantityNeeded() {
     inquirer.prompt({
         name: "quantityNeeded",
         type: 'input',
@@ -143,7 +142,7 @@ var quantityNeeded = function() {
 }
 
 // function to ask if user would like to make another purchase
-var newOrder = function() {
+function newOrder() {
     inquirer.prompt({
         name: "newOrder",
         type: "confirm",
