@@ -161,7 +161,7 @@ function removeProduct(){
                     };
                     connection.query(`DELETE FROM products WHERE ?`, { item_id: deleteProduct.item_id }, function(err, res) {
                         if (err) throw err;
-                        console.log(chalk.redBright.bold("\nThe product has been removed from your inventory.\n");
+                        console.log(chalk.redBright.bold("\nThe product has been removed from your inventory.\n"));
                         viewProductsForSale();
                     });
                 } else {
