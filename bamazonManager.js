@@ -14,18 +14,19 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // Added \t\xa0 for spacing so "Welcome to Bamazon!" is centered over the product table.
-    console.log(chalk.whiteBright("\n\t\t\xa0\xa0Welcome to Bamazon Manager!\n"));
+    console.log(chalk.yellowBright.bold("\n\xa0\xa0Welcome to Bamazon Manager!\n"));
     menuOptions();
 });
 
 let updateProduct = {};
+let deleteProduct = {};
 
 // Function to view menu options with a switch case that will run the appropriate function based on the user's choice.
 function menuOptions() {
     inquirer.prompt({
         name: "options",
         type: "rawlist",
-        message: "What would you like to do?",
+        message: "What would you like to do today?",
         choices: [
             "View Products for Sale",
             "View Low Inventory",
@@ -54,6 +55,7 @@ function menuOptions() {
     });
 };
 
+// Function that display all of the products currently for sale
 function viewProductsForSale() {
     connection.query("SELECT * FROM products", (err, res) => {
         let productListing = new Table({
@@ -67,6 +69,7 @@ function viewProductsForSale() {
     });
 };
 
+// Function that display inventory 
 function viewLowInventory() {
     connection.query("SELECT * FROM products WHERE stock_quantity < 5 ORDER BY stock_quantity DESC", function(err, res){
         if (res.length > 0) {
@@ -90,18 +93,90 @@ function addToInventory(){
 };
 
 function addNewProduct(){
-
+    inquirer.prompt([
+        {
+            name: "productName",
+            type: "input",
+            message: "Please enter the product name:"
+        },
+        {
+            name: "departmentName",
+            type: "input",
+            message: "Please enter the department name:"
+        },
+        {
+            name: "price",
+            type: "input",
+            message: "Please enter the price:",
+            validate: function(value) {
+                if (!isNaN(value) && value > 0) {
+                    return true;
+                } else {
+                    console.log(chalk.redBright.bold("Please enter a price higher than $0.00."));
+                    return false;
+                }
+            }
+        },
+        {
+            name: "stockQuantity",
+            type: "input",
+            message: "Please enter the quantity:",
+            validate: function(value) {
+                if (!isNaN(value) && value > 0) {
+                    return true;
+                } else {
+                    console.log(chalk.redBright.bold("You must enter a quantity greater than 0."));
+                }
+            }
+        },
+    ]).then(function(answer) {
+        connection.query("INSERT INTO products SET ?", {
+            product_name: answer.productName,
+            department_name: answer.departmentName,
+            price: answer.price,
+            stock_quantity: answer.stockQuantity
+        }, function(err, res) {
+            if (err) throw err;
+            console.log(chalk.redBright.bold(`The '${answer.productName}' product has been added to the ${answer.departmentName} department of your inventory!`));
+            viewProductsForSale();
+        });
+    });
 };
 
 function removeProduct(){
-
+    inquirer.prompt({
+        name: "productID",
+        type: "input",
+        message: "Please enter the product ID you need to remove:"
+    }).then(function(answer) {
+        connection.query("SELECT * FROM products WHERE ?", { item_id: answer.productID }, function(err, res) { 
+            inquirer.prompt({
+                name: "check",
+                type: "confirm",
+                message: `Are you sure you want to delete the ` + chalk.redBright.bold(`'${res[0].product_name}'`) + ` product?`
+            }).then(function(answer) {
+                if (answer.check) {
+                    deleteProduct = {
+                        item_id: res[0].item_id,
+                    };
+                    connection.query(`DELETE FROM products WHERE ?`, { item_id: deleteProduct.item_id }, function(err, res) {
+                        if (err) throw err;
+                        console.log(chalk.redBright.bold("\nThe product has been removed from your inventory.\n");
+                        viewProductsForSale();
+                    });
+                } else {
+                    removeProduct();
+                }
+            });
+        });
+    });
 };
 
 function productID() {
     inquirer.prompt({
         name: "productID",
         type: "input",
-        message: "Hello! Please enter the product ID you would like to update today.",
+        message: "Please enter the product ID you would like to update today.",
         // Checks if the product ID entered by the user is a number between 1-10
         validate: (value) => {
             if (!isNaN(value) && (value > 0 && value <= 10)) {
@@ -165,7 +240,7 @@ function quantiyNeeded() {
                 item_id: updateProduct.item_id
             }
         ], (err, res) => {
-            console.log(chalk.blue.bold(`\n\tThe '${updateProduct.product_name}' now has an available quantity of ${Number(updateProduct.stock_quantity) + Number(updateProduct.quantityNeeded)} units!\n`));
+            console.log(chalk.blue.bold(`\n\tThe '${updateProduct.product_name}' product from the ${updateProduct.department_name} department now has an available quantity of ${Number(updateProduct.stock_quantity) + Number(updateProduct.quantityNeeded)} units!\n`));
             connection.end();
         });
     });
