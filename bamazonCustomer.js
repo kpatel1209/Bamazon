@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
     if (err) throw err;
     // Added \xa0 for spacing so "Welcome to Bamazon!" is centered over the product table.
-    console.log(chalk.whiteBright("\n\t\xa0\xa0\xa0\xa0Welcome to Bamazon!\n"));
+    console.log(chalk.whiteBright("\n\t\t\t\xa0\xa0Welcome to Bamazon!\n"));
     showAllProducts();
 });
 
@@ -132,7 +132,7 @@ function quantityNeeded() {
                         item_id: userChoice.item_id
                     }
                 ], function(err, res) {
-                    console.log(chalk.greenBright.bold(`\n\tThe total amount for your order is $${(userChoice.price * userChoice.quantityNeeded)}.\n`));
+                    console.log(chalk.blueBright.bold(`\n\tThe total amount for your order is $${(userChoice.price * userChoice.quantityNeeded)}.\n`));
                     // ask if user would like to make another purchase
                     newOrder();
                 });

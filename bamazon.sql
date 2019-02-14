@@ -13,13 +13,13 @@ CREATE TABLE products(
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
-("TV Remote", "Electronics", 29.99, 100),
-("Pillow", "Home", 12.95, 200),
-("Phone", "Electronics", 499.97, 100),
-("Knives", "Kitchen", 50.75, 250),
-("Candles", "Home", 10.99, 500),
-("Backpack", "Kids", 25.49, 150),
-("Barbie", "Toys", 14.99, 75),
-("Race Car", "Toys", 51.75, 100),
-("Silverware", "Kitchen", 25.69, 100),
-("Alarm Clock", "Electronics", 19.99, 40);
+("Cards Against Humanity", "Toys", 25.00, 100),
+("Becoming Michelle Obama", "Books", 19.50, 200),
+("Ring Video Doorbell 2", "Electronics", 169.00, 100),
+("Keurig Coffee Maker", "Kitchen & Dining", 87.16, 250),
+("Code Names", "Toys", 14.79, 500),
+("ThisWorx for TWC-01 Car Vacuum", "Automotive", 30.87, 150),
+("Jenga Classic Game", "Toys", 8.55, 75),
+("Llama Llama I Love You", "Books", 4.33, 100),
+("Instant Pot Duo Mini", "Kitchen & Dining", 99.95, 100),
+("Echo Dot (3rd Gen)", "Electronics", 49.99, 40);
