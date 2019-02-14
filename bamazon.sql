@@ -15,11 +15,11 @@ CREATE TABLE products(
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
 ("Cards Against Humanity", "Toys", 25.00, 100),
 ("Becoming Michelle Obama", "Books", 19.50, 200),
-("Ring Video Doorbell 2", "Electronics", 169.00, 100),
+("Ring Video Doorbell 2", "Electronics", 169.00, 4),
 ("Keurig Coffee Maker", "Kitchen & Dining", 87.16, 250),
 ("Code Names", "Toys", 14.79, 500),
 ("ThisWorx for TWC-01 Car Vacuum", "Automotive", 30.87, 150),
-("Jenga Classic Game", "Toys", 8.55, 75),
+("Jenga Classic Game", "Toys", 8.55, 2),
 ("Llama Llama I Love You", "Books", 4.33, 100),
 ("Instant Pot Duo Mini", "Kitchen & Dining", 99.95, 100),
 ("Echo Dot (3rd Gen)", "Electronics", 49.99, 40);

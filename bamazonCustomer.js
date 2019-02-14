@@ -45,18 +45,18 @@ function productID() {
         name: "productID",
         type: "input",
         message: "Hello! Please refer to the table above and enter the product ID you would like to purchase today.",
-        // Check if the product ID entered by the user is a number between 1-10
+        // Checks if the product ID entered by the user is a number between 1-10
         validate: function(value) {
             if (!isNaN(value) && (value > 0 && value <= 10)) {
                 return true;
             } else {
-                console.log(chalk.yellow("You must enter a product ID between 1-10 to move forward with your order."));
+                console.log(chalk.redBright("You must enter a product ID between 1-10 to move forward with your order."));
                 return false;
             }
         }
     }).then(function(answer) {
         connection.query("SELECT item_id, product_name, department_name, price, stock_quantity, product_sales FROM products WHERE ?", { item_id: answer.productID }, function(err, res){
-            // Check with the user if this is the correct product they want to purchase.
+            // Checks with the user if this is the correct product they want to purchase.
             productCheck(res[0].product_name, res);
         });
     });
@@ -90,13 +90,13 @@ function productCheck(product, object) {
 function quantityNeeded() {
     inquirer.prompt({
         name: "quantityNeeded",
-        type: 'input',
+        type: "input",
         message: "How many would you like to purchase today?",
         validate: function(value) {
             if (!isNaN(value) && value > 0) {
                 return true;
             } else {
-                console.log(chalk.yellow("Please enter a number between 1-10"));
+                console.log(chalk.redBright("Please enter a quantity!"));
                 return false;
             }
         }
@@ -140,7 +140,7 @@ function quantityNeeded() {
     });
 }
 
-// function to ask if user would like to make another purchase
+// Function that allows user to start another order if they want to.
 function newOrder() {
     inquirer.prompt({
         name: "newOrder",
