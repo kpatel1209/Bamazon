@@ -32,7 +32,7 @@ function showAllProducts() {
             head: [chalk.blueBright.bold("ID"), chalk.blueBright.bold("PRODUCT NAME"), chalk.blueBright.bold("DEPARTMENT"), chalk.blueBright.bold("PRICE")],
         });
         for (let i = 0; i < res.length; i++) {
-            productListing.push([chalk.red.bold(res[i].item_id), res[i].product_name, res[i].department_name, chalk.greenBright(`$${res[i].price}`)]);
+            productListing.push([chalk.redBright.bold(res[i].item_id), res[i].product_name, res[i].department_name, chalk.greenBright(`$${res[i].price}`)]);
         }
         console.log(`${productListing.toString()}`);
         productID();
@@ -67,7 +67,7 @@ function productCheck(product, object) {
     inquirer.prompt({
         name: "productCheck",
         type: "confirm",
-        message: `Please confirm if ` + chalk.yellow.bold(`'${product}'`) + ` is the correct product you want to purchase?`
+        message: `Please confirm if ` + chalk.blueBright.bold(`'${product}'`) + ` is the correct product you want to purchase?`
     }).then(function(answer) {
         if (answer.productCheck) {
             userChoice = {
@@ -104,7 +104,7 @@ function quantityNeeded() {
         connection.query("SELECT stock_quantity FROM products WHERE ?", { item_id: userChoice.item_id }, function(err, res){
             // If there is not enough quantity to fulfill the order.
              if (res[0].stock_quantity < answer.quantityNeeded) {
-                console.log(chalk.yellow.bold("\n\tSorry for any inconvenience, but we currently do not have that quantity amount in stock.\n"));
+                console.log(chalk.redBright.bold("\n\tSorry for any inconvenience, but we currently do not have that quantity amount in stock.\n"));
                 inquirer.prompt({
                     name: "continue",
                     type: "confirm",
@@ -132,8 +132,7 @@ function quantityNeeded() {
                         item_id: userChoice.item_id
                     }
                 ], function(err, res) {
-                    console.log(chalk.blueBright.bold(`\n\tThe total amount for your order is $${(userChoice.price * userChoice.quantityNeeded)}.\n`));
-                    // ask if user would like to make another purchase
+                    console.log(chalk.greenBright.bold(`\n\tThe total amount for your order is $${(userChoice.price * userChoice.quantityNeeded).toFixed(2)}.\n`));
                     newOrder();
                 });
             }
@@ -152,7 +151,7 @@ function newOrder() {
             emptyUserChoice();
             productID();
         } else {
-            console.log(chalk.yellow.bold("\n\tThanks for visiting Bamazon!  See you soon!"));
+            console.log(chalk.blueBright.bold("\n\tThanks for visiting Bamazon!  See you soon!"));
             connection.end();
         }
     });

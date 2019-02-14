@@ -23,3 +23,4 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
 ("Llama Llama I Love You", "Books", 4.33, 100),
 ("Instant Pot Duo Mini", "Kitchen & Dining", 99.95, 100),
 ("Echo Dot (3rd Gen)", "Electronics", 49.99, 40);
+
