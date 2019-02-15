@@ -19,7 +19,6 @@ connection.connect(function(err) {
 });
 
 let updateProduct = {};
-let deleteProduct = {};
 
 // Function to view menu options with a switch case that will run the appropriate function based on the user's choice.
 function menuOptions() {
@@ -32,7 +31,6 @@ function menuOptions() {
             "View Low Inventory",
             "Add to Inventory",
             "Add New Product",
-            "Remove Product"
         ]
     }).then(function(answer){
         switch(answer.options) {
@@ -47,9 +45,6 @@ function menuOptions() {
             break;
             case "Add New Product":
                 addNewProduct();
-            break;
-            case "Remove Product":
-                removeProduct();
             break;
         }
     });
@@ -137,37 +132,8 @@ function addNewProduct(){
             stock_quantity: answer.stockQuantity
         }, function(err, res) {
             if (err) throw err;
-            console.log(chalk.redBright.bold(`The '${answer.productName}' product has been added to the ${answer.departmentName} department of your inventory!`));
+            console.log(chalk.redBright.bold(`\nThe '${answer.productName}' product has been added to the ${answer.departmentName} department of your inventory!\n`));
             viewProductsForSale();
-        });
-    });
-};
-
-function removeProduct(){
-    inquirer.prompt({
-        name: "productID",
-        type: "input",
-        message: "Please enter the product ID you need to remove:"
-    }).then(function(answer) {
-        connection.query("SELECT * FROM products WHERE ?", { item_id: answer.productID }, function(err, res) { 
-            inquirer.prompt({
-                name: "check",
-                type: "confirm",
-                message: `Are you sure you want to delete the ` + chalk.redBright.bold(`'${res[0].product_name}'`) + ` product?`
-            }).then(function(answer) {
-                if (answer.check) {
-                    deleteProduct = {
-                        item_id: res[0].item_id,
-                    };
-                    connection.query(`DELETE FROM products WHERE ?`, { item_id: deleteProduct.item_id }, function(err, res) {
-                        if (err) throw err;
-                        console.log(chalk.redBright.bold("\nThe product has been removed from your inventory.\n"));
-                        viewProductsForSale();
-                    });
-                } else {
-                    removeProduct();
-                }
-            });
         });
     });
 };

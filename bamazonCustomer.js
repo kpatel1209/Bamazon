@@ -44,7 +44,7 @@ function productID() {
     inquirer.prompt({
         name: "productID",
         type: "input",
-        message: "Hello! Please refer to the table above and enter the product ID you would like to purchase today.",
+        message: "Please refer to the table above and enter the product ID you would like to purchase today.",
         // Checks if the product ID entered by the user is a number between 1-10
         validate: function(value) {
             if (!isNaN(value) && (value > 0 && value <= 10)) {
@@ -104,7 +104,7 @@ function quantityNeeded() {
         connection.query("SELECT stock_quantity FROM products WHERE ?", { item_id: userChoice.item_id }, function(err, res){
             // If there is not enough quantity to fulfill the order.
              if (res[0].stock_quantity < answer.quantityNeeded) {
-                console.log(chalk.redBright.bold("\n\tSorry for any inconvenience, but we currently do not have that quantity amount in stock.\n"));
+                console.log(chalk.redBright.bold("\n\tSorry for any inconvenience, but we currently do not have that amount available.\n"));
                 inquirer.prompt({
                     name: "continue",
                     type: "confirm",
