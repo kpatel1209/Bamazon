@@ -13,7 +13,7 @@ Welcome to Bamazon, which is an Amazon-like storefront built using Node.js and M
 
 ## See What Each Command Line Does
 
-### 1.  `bamazoncustomer.js`
+### 1)  `bamazoncustomer.js`
 
    * Displays all products that are for sale.
    * Inquirer Prompts:
@@ -25,3 +25,28 @@ Welcome to Bamazon, which is an Amazon-like storefront built using Node.js and M
    * When the order is completed, the stock quantity and product sales will be updated to reflect the purchase.
 
 ![gif of bamazoncustomer](gifs/bamazoncustomer.gif)
+
+### 2) `bamazonmanager.js`
+
+   * Displays a menu with four options:
+      * `View Products for Sale`
+      * `View Low Inventory`
+      * `Add to Inventory`
+      * `Add New Product`
+
+   * When the user selects `View Products for Sale`, the app lists all of the products for sale including their details.
+
+   ![gif of viewProductsForSale](gifs/viewProductsForSale.gif)
+
+   * When the user selects `View Low Inventory`, the app lists all of the products which have less than 5 units in stock.
+
+   ![gif of viewLowInventory](gifs/viewLowInventory.gif)
+
+   * When the user selects `Add to Inventory`, the app allows the manager to select the product by ID and add more units to their inventory.
+
+   ![gif of addToInventory](gifs/addToInventory.gif)
+
+   * When the user selects `Add New Product`, the app allows to manager to add a new product with details such as department, price, and quantity.
+
+   ![gif of addNewProduct](gifs/addNewProduct.gif)
+

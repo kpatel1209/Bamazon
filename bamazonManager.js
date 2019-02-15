@@ -142,7 +142,7 @@ function productID() {
     inquirer.prompt({
         name: "productID",
         type: "input",
-        message: "Please enter the product ID you would like to update today.",
+        message: "Please enter the product ID you would like to update.",
         // Checks if the product ID entered by the user is a number between 1-10
         validate: (value) => {
             if (!isNaN(value) && (value > 0 && value <= 10)) {
@@ -192,7 +192,7 @@ function quantiyNeeded() {
             if (!isNaN(value) && value > 0) {
                 return true;
             } else {
-                console.log(chalk.redBright("Please enter a quantity!"));
+                console.log(chalk.redBright("Please enter a quantity greater than 4."));
                 return false;
             }
         }
