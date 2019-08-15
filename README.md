@@ -54,7 +54,6 @@ Welcome to Bamazon, which is an Amazon-like storefront built using Node.js and M
 - Node.js
 - MySQL
 - NPM Packages
-   - MySQL
    - Inquirer
    - CLI Table
    - Chalk
